@@ -1,0 +1,18 @@
+#!/bin/bash
+if [[ -z "$remote" || -z "$pass" ]]
+then 
+echo " Enviroment variable 'remote' and 'pass' should be initialized for ssh"
+exit 1
+else
+if [ -a ~/.ssh/id_rsa ]
+then
+/usr/local/bin/jen
+else
+/usr/local/bin/keygen
+/usr/local/bin/copyid $remote $pass
+/usr/local/bin/jen
+> /var/demo
+/usr/local/bin/scp_demo $remote
+fi
+sleep 100d
+fi

@@ -1,0 +1,10 @@
+#!/bin/bash
+/etc/init.d/jenkins start
+
+sleep 10
+until [ -a /var/lib/jenkins/secrets/initialAdminPassword ];
+do
+sleep 1;
+done
+echo -n "Default pass : "
+cat /var/lib/jenkins/secrets/initialAdminPassword

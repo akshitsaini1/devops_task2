@@ -1,0 +1,6 @@
+#!/usr/bin/expect -f
+set timeout -1
+set user [lindex $argv 0]
+spawm scp demo $user:/
+expect "*(yes/no)?"
+send "no\n"
