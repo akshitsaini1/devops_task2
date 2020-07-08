@@ -1,0 +1,8 @@
+if sudo ls /root/ | grep production 
+then
+sudo mv * /root/production
+else
+echo " creating dir"
+sudo mkdir /root/production
+sudo mv * /root/production/
+fi
