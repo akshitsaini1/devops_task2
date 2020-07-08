@@ -1,0 +1,27 @@
+phpfiles=($(sudo ls /root/production | grep .php))
+htmlfiles=($(sudo ls /root/production | grep .html))
+arr=($remote)
+
+for file in ${phpfiles[@]}
+do
+	exit_code=$(sudo ssh $remote curl -o /dev/null -s -w "%{http_code}" ${arr[0]:5}:5000/$file)
+    if [ $exit_code -nq 200 ]
+    then 
+    	exit 1
+    else
+    	echo "$file is good, removing $file"
+    	sudo rm -rf /root/production/$file  
+    fi
+done
+
+for file in ${htmlfiles[@]}
+do
+	exit_code1=$(sudo ssh $remote curl -o /dev/null -s -w "%{http_code}" ${arr[0]:5}:5001/$file)
+    if [ $exit_code1 -nq 200 ]
+    then 
+    	exit 2
+    else
+    	echo "$file is good, removing $file"
+    	sudo rm -rf /root/production/$file
+    fi
+done
