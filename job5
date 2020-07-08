@@ -1,0 +1,29 @@
+if sudo ssh $remote docker ps | grep php
+    then
+    	echo "php container already running"
+    else
+    	echo "Container is not running"
+    	if sudo ssh $remote docker ps -a | grep php
+        then
+        	echo "resuming php container"
+        	sudo ssh $remote docker start php
+        else
+        	echo "starting new php container"
+        	sudo ssh $remote docker -dit --name php -p 5000:80 -v /root/webserver/php/:/var/www/html/ vimal13/apache-webserver-php
+        fi
+    fi
+    
+if sudo ssh $remote docker ps | grep html
+    then
+    	echo "html container already running"
+    else
+    	echo "Container is not running"
+    	if sudo ssh $remote docker ps -a | grep html
+        then
+        	echo "resuming php container"
+        	sudo ssh $remote docker start html
+        else
+        	echo "starting new php container"
+        	sudo ssh $remote docker -dit --name html -p 5000:80 -v /root/webserver/html/:/var/www/html/httpws:v1 
+        fi
+    fi
